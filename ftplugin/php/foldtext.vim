@@ -48,11 +48,11 @@ function! GetPhpFoldText()
                 endif 
             endif
         endif
-    elseif line =~? '\v\s*(abstract\s+|public\s+|private\s+|static\s+|private\s+)*function\s+\k'
+    elseif line =~? '\v\s*(abstract\s+|public\s+|private\s+|static\s+|private\s+)*(class|function)\s+\k'
         " Name functions and methods
         let text .= ExtractFuncName(v:foldstart)
         let text .= '{...}'
-    elseif getline(v:foldstart-1) =~? '\v\)\s+use\s+\(|\s*(abstract\s+|public\s+|private\s+|static\s+|private\s+)*function\s+(\k+[^)]+$|\([^{]*$)'
+    elseif getline(v:foldstart-1) =~? '\v\)\s+use\s+\(|\s*(abstract\s+|public\s+|private\s+|static\s+|private\s+)*(class|function)\s+(\k+[^)]+$|\([^{]*$)'
         " If a named function's arguments are multiple lines and in their own fold, display the arguments in a list
         let cline = v:foldstart
         while cline <= v:foldend

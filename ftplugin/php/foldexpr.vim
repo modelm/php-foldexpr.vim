@@ -65,7 +65,7 @@ function! GetPhpFold(lnum)
     endif
 
     " handle class methods and independent functions
-    if line =~? '\v\s*(abstract\s+|public\s+|private\s+|static\s+|private\s+)*function\s+(\k|\()' && line !~? ';$'
+    if line =~? '\v\s*(abstract\s+|public\s+|private\s+|static\s+|private\s+)*(class|function)\s+(\k|\()' && line !~? ';$'
         if b:phpfold_doc_with_funcs
             return IndentLevel(a:lnum)+1
         else
@@ -107,7 +107,7 @@ function! GetPhpFold(lnum)
         elseif line =~? '\v^\s*\*/@!' && IsDocBlock(a:lnum-1)
             return IndentLevel(a:lnum)+1
         elseif line =~? '\v^\s*\*/'
-            if b:phpfold_doc_with_funcs && getline(a:lnum+1) =~?  '\v\s*(abstract\s+|public\s+|private\s+|static\s+|private\s+)*(class\s+|function\s+(\k|\())'
+            if b:phpfold_doc_with_funcs && getline(a:lnum+1) =~?  '\v\s*(abstract\s+|public\s+|private\s+|static\s+|private\s+)*(class|function)\s+(\k|\()'
                 return IndentLevel(a:lnum)+1
             else
                 return '<' . (IndentLevel(a:lnum)+1)
